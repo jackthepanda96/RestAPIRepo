@@ -1,0 +1,15 @@
+{
+ "nama": "Jerry",
+ "alamat": [
+  {
+   "provinsi": "Jawa Timur",
+   "kota": "Surabaya"
+  },
+  {
+   "provinsi": "Jawa Tengah",
+   "kota": "Semarang"
+  }
+ ],
+ "email": "jerry@alterra.id",
+ "hp": 123456
+}
