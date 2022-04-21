@@ -18,8 +18,9 @@ func main() {
 	db := config.InitDB(*conf)
 	e := echo.New()
 	// e.Validator = validator.New()
-	pm := mPegawai.PegawaiModel{Db: db}
-	pc := pegawai.PegawaiController{Repo: pm, Valid: validator.New()}
+	// pm := mPegawai.PegawaiModel{Db: db}
+	pm := mPegawai.New(db)
+	pc := pegawai.PegawaiController{Repo: *pm, Valid: validator.New()}
 
 	routes.RegisterPath(e, pc)
 

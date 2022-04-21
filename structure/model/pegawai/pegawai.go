@@ -17,6 +17,12 @@ type PegawaiModel struct {
 	Db *gorm.DB
 }
 
+func New(db *gorm.DB) *PegawaiModel {
+	return &PegawaiModel{
+		Db: db,
+	}
+}
+
 func (pr *PegawaiModel) Insert(newPegawai Pegawai) (Pegawai, error) {
 	if err := pr.Db.Create(&newPegawai).Error; err != nil {
 		log.Warn(err)
