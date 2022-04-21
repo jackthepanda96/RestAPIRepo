@@ -6,12 +6,14 @@ import (
 	"apiex/structure/view/pegawai"
 	"net/http"
 
+	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
 )
 
 type PegawaiController struct {
-	Repo mPegawai.PegawaiModel
+	Repo  mPegawai.PegawaiModel
+	Valid *validator.Validate
 }
 
 func (pc *PegawaiController) InsertNewPegawai(c echo.Context) error {
@@ -21,7 +23,13 @@ func (pc *PegawaiController) InsertNewPegawai(c echo.Context) error {
 		log.Warn("salah input")
 		return c.JSON(http.StatusBadRequest, pegawai.BadRequest())
 	}
-	newPegawai := mPegawai.Pegawai{Nama: tmpPegawai.Nama}
+
+	if err := pc.Valid.Struct(tmpPegawai); err != nil {
+		log.Warn(err.Error())
+		return c.JSON(http.StatusBadRequest, pegawai.BadRequest())
+	}
+
+	newPegawai := mPegawai.Pegawai{Nama: tmpPegawai.Nama, HP: tmpPegawai.HP}
 	res, err := pc.Repo.Insert(newPegawai)
 
 	if err != nil {
