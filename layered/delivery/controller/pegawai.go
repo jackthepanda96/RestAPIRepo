@@ -48,19 +48,19 @@ func (pc *PegawaiController) Insert(c echo.Context) error {
 	return c.JSON(http.StatusCreated, pegawai.SuccessInsert(res))
 }
 
-// func (pc *PegawaiController) GetAllPegawai(c echo.Context) error {
+func (pc *PegawaiController) GetAllPegawai(c echo.Context) error {
 
-// 	res, err := pc.Repo.GetAll()
+	res, err := pc.Repo.GetAll()
 
-// 	if err != nil {
-// 		log.Warn("masalah pada server")
-// 		return c.JSON(http.StatusInternalServerError, view.InternalServerError())
-// 	}
-// 	log.Info("berhasil get all data")
-// 	return c.JSON(http.StatusOK, map[string]interface{}{
-// 		"code":    http.StatusOK,
-// 		"message": "berhasil get all data",
-// 		"status":  true,
-// 		"data":    res,
-// 	})
-// }
+	if err != nil {
+		log.Warn("masalah pada server")
+		return c.JSON(http.StatusInternalServerError, view.InternalServerError())
+	}
+	log.Info("berhasil get all data")
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"code":    http.StatusOK,
+		"message": "berhasil get all data",
+		"status":  true,
+		"data":    res,
+	})
+}
