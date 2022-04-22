@@ -1,7 +1,7 @@
 package pegawai
 
 import (
-	"apiex/layered/entity"
+	"apiex/mware/entity"
 	"errors"
 
 	"github.com/labstack/gommon/log"

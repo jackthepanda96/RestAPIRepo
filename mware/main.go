@@ -1,10 +1,10 @@
 package main
 
 import (
-	"apiex/layered/config"
-	pegawaiController "apiex/layered/delivery/controller"
-	"apiex/layered/delivery/routes"
-	pegawaiRepo "apiex/layered/repository/pegawai"
+	"apiex/mware/config"
+	pegawaiController "apiex/mware/delivery/controller"
+	"apiex/mware/delivery/routes"
+	pegawaiRepo "apiex/mware/repository/pegawai"
 	"fmt"
 	"log"
 

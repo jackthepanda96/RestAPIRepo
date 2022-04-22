@@ -1,10 +1,10 @@
 package controller
 
 import (
-	"apiex/layered/delivery/view"
-	"apiex/layered/delivery/view/pegawai"
-	"apiex/layered/entity"
-	pegawaiRepo "apiex/layered/repository/pegawai"
+	"apiex/mware/delivery/view"
+	"apiex/mware/delivery/view/pegawai"
+	"apiex/mware/entity"
+	pegawaiRepo "apiex/mware/repository/pegawai"
 	"net/http"
 
 	"github.com/go-playground/validator"

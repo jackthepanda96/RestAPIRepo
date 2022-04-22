@@ -1,6 +1,6 @@
 package pegawai
 
-import "apiex/layered/entity"
+import "apiex/mware/entity"
 
 type Pegawai interface {
 	Insert(newPegawai entity.Pegawai) (entity.Pegawai, error)

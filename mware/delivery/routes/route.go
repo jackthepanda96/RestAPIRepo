@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"apiex/layered/delivery/controller"
+	"apiex/mware/delivery/controller"
 
 	"github.com/labstack/echo/v4"
 )

@@ -1,7 +1,7 @@
 package pegawai
 
 import (
-	"apiex/layered/entity"
+	"apiex/mware/entity"
 	"net/http"
 )
 
