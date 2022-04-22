@@ -10,3 +10,12 @@ func InternalServerError() map[string]interface{} {
 		"data":    nil,
 	}
 }
+
+func OK(data interface{}, message string) map[string]interface{} {
+	return map[string]interface{}{
+		"code":    http.StatusOK,
+		"message": message,
+		"status":  true,
+		"data":    data,
+	}
+}

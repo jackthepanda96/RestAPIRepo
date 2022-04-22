@@ -43,3 +43,14 @@ func (pr *PegawaiRepo) GetAll() ([]entity.Pegawai, error) {
 	log.Info()
 	return arrPegawai, nil
 }
+
+func (pr *PegawaiRepo) Login(hp int, password string) (entity.Pegawai, error) {
+	pegawai := entity.Pegawai{}
+
+	if err := pr.Db.Where("hp = ? AND password = ?", hp, password).First(&pegawai).Error; err != nil {
+		log.Warn(err)
+		return pegawai, errors.New("tidak bisa select data")
+	}
+
+	return pegawai, nil
+}
