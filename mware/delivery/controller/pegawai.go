@@ -1,9 +1,10 @@
-package pegawai
+package controller
 
 import (
-	mPegawai "apiex/mvc/model/pegawai"
-	"apiex/mvc/view"
-	"apiex/mvc/view/pegawai"
+	"apiex/layered/delivery/view"
+	"apiex/layered/delivery/view/pegawai"
+	"apiex/layered/entity"
+	pegawaiRepo "apiex/layered/repository/pegawai"
 	"net/http"
 
 	"github.com/go-playground/validator"
@@ -12,11 +13,18 @@ import (
 )
 
 type PegawaiController struct {
-	Repo  mPegawai.PegawaiModel
+	Repo  pegawaiRepo.Pegawai
 	Valid *validator.Validate
 }
 
-func (pc *PegawaiController) InsertNewPegawai(c echo.Context) error {
+func New(repo pegawaiRepo.Pegawai, valid *validator.Validate) *PegawaiController {
+	return &PegawaiController{
+		Repo:  repo,
+		Valid: valid,
+	}
+}
+
+func (pc *PegawaiController) Insert(c echo.Context) error {
 	var tmpPegawai pegawai.InsertPegawaiRequest
 
 	if err := c.Bind(&tmpPegawai); err != nil {
@@ -29,7 +37,7 @@ func (pc *PegawaiController) InsertNewPegawai(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, pegawai.BadRequest())
 	}
 
-	newPegawai := mPegawai.Pegawai{Nama: tmpPegawai.Nama, HP: tmpPegawai.HP}
+	newPegawai := entity.Pegawai{Nama: tmpPegawai.Nama, HP: tmpPegawai.HP}
 	res, err := pc.Repo.Insert(newPegawai)
 
 	if err != nil {

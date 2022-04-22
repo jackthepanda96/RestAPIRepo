@@ -1,11 +1,11 @@
 package pegawai
 
 import (
-	"apiex/mvc/model/pegawai"
+	"apiex/layered/entity"
 	"net/http"
 )
 
-func SuccessInsert(data pegawai.Pegawai) map[string]interface{} {
+func SuccessInsert(data entity.Pegawai) map[string]interface{} {
 	return map[string]interface{}{
 		"code":    http.StatusCreated,
 		"message": "berhasil insert data pegawai",

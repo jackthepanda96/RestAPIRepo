@@ -1,10 +1,10 @@
 package main
 
 import (
-	"apiex/structure/config"
-	"apiex/structure/controller/pegawai"
-	mPegawai "apiex/structure/model/pegawai"
-	"apiex/structure/routes"
+	"apiex/mvc/config"
+	"apiex/mvc/controller/pegawai"
+	mPegawai "apiex/mvc/model/pegawai"
+	"apiex/mvc/routes"
 	"fmt"
 
 	"github.com/go-playground/validator"

@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"apiex/structure/controller/pegawai"
+	"apiex/mvc/controller/pegawai"
 
 	"github.com/labstack/echo/v4"
 )
