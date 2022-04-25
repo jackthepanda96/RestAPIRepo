@@ -1,0 +1,12 @@
+mode: set
+apiex/testing/delivery/controller/pegawai.go:20.82,25.2 1 1
+apiex/testing/delivery/controller/pegawai.go:27.59,30.44 2 1
+apiex/testing/delivery/controller/pegawai.go:36.2,36.52 1 1
+apiex/testing/delivery/controller/pegawai.go:41.2,44.16 3 1
+apiex/testing/delivery/controller/pegawai.go:48.2,49.63 2 1
+apiex/testing/delivery/controller/pegawai.go:30.44,34.3 3 1
+apiex/testing/delivery/controller/pegawai.go:36.52,39.3 2 1
+apiex/testing/delivery/controller/pegawai.go:44.16,47.3 2 1
+apiex/testing/delivery/controller/pegawai.go:52.66,56.16 2 1
+apiex/testing/delivery/controller/pegawai.go:60.2,66.4 2 1
+apiex/testing/delivery/controller/pegawai.go:56.16,59.3 2 1
