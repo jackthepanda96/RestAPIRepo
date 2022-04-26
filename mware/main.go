@@ -2,8 +2,8 @@ package main
 
 import (
 	"apiex/mware/config"
-	pegawaiController "apiex/mware/delivery/controller"
 	"apiex/mware/delivery/controller/book"
+	pegawaiController "apiex/mware/delivery/controller/pegawai"
 	"apiex/mware/delivery/routes"
 	"apiex/mware/entity"
 	bookRepo "apiex/mware/repository/book"
