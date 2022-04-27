@@ -15,7 +15,7 @@ import (
 )
 
 func InitDB() *gorm.DB {
-	db, err := gorm.Open(mysql.Open("root:jerry123@tcp(localhost:3306)/dborm?charset=utf8mb4&parseTime=True"), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open("root:password*@tcp(host:3306)/be8rds?charset=utf8mb4&parseTime=True"), &gorm.Config{})
 	if err != nil {
 		log.Fatal(err.Error())
 	}

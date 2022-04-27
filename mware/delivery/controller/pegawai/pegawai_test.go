@@ -11,7 +11,6 @@ import (
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/labstack/gommon/log"
 	"github.com/stretchr/testify/assert"
 	"gorm.io/gorm"
 )
@@ -31,7 +30,7 @@ func TestLogin(t *testing.T) {
 	context.SetPath("/login")
 
 	controller := New(&mockRepoPegawai{}, validator.New())
-	controller.Login(context)
+	controller.Login()(context)
 
 	type ResponseStructure struct {
 		Code    int
@@ -43,11 +42,10 @@ func TestLogin(t *testing.T) {
 	var response ResponseStructure
 
 	json.Unmarshal([]byte(res.Body.Bytes()), &response)
-	log.Warn(response.Data)
+	assert.Equal(t, 200, response.Code)
 	assert.True(t, response.Status)
 	assert.NotNil(t, response.Data)
 	data := response.Data.(map[string]interface{})
-	log.Warn(data)
 	token = data["Token"].(string)
 }
 
@@ -58,7 +56,7 @@ func TestInsert(t *testing.T) {
 func TestGetAllPegawai(t *testing.T) {
 	t.Run("Get All Pegawai", func(t *testing.T) {
 		e := echo.New()
-		req := httptest.NewRequest(http.MethodPost, "/", nil)
+		req := httptest.NewRequest(http.MethodGet, "/", nil)
 		req.Header.Set(echo.HeaderAuthorization, "Bearer "+token)
 		res := httptest.NewRecorder()
 		context := e.NewContext(req, res)

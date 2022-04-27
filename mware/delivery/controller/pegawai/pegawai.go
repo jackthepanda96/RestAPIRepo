@@ -27,28 +27,30 @@ func New(repo pegawaiRepo.Pegawai, valid *validator.Validate) *PegawaiController
 	}
 }
 
-func (pc *PegawaiController) Insert(c echo.Context) error {
-	var tmpPegawai pegawai.InsertPegawaiRequest
+func (pc *PegawaiController) Insert() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		var tmpPegawai pegawai.InsertPegawaiRequest
 
-	if err := c.Bind(&tmpPegawai); err != nil {
-		log.Warn("salah input")
-		return c.JSON(http.StatusBadRequest, pegawai.BadRequest())
+		if err := c.Bind(&tmpPegawai); err != nil {
+			log.Warn("salah input")
+			return c.JSON(http.StatusBadRequest, pegawai.BadRequest())
+		}
+
+		if err := pc.Valid.Struct(tmpPegawai); err != nil {
+			log.Warn(err.Error())
+			return c.JSON(http.StatusBadRequest, pegawai.BadRequest())
+		}
+
+		newPegawai := entity.Pegawai{Nama: tmpPegawai.Nama, HP: tmpPegawai.HP, Password: tmpPegawai.Password}
+		res, err := pc.Repo.Insert(newPegawai)
+
+		if err != nil {
+			log.Warn("masalah pada server")
+			return c.JSON(http.StatusInternalServerError, view.InternalServerError())
+		}
+		log.Info("berhasil insert")
+		return c.JSON(http.StatusCreated, pegawai.SuccessInsert(res))
 	}
-
-	if err := pc.Valid.Struct(tmpPegawai); err != nil {
-		log.Warn(err.Error())
-		return c.JSON(http.StatusBadRequest, pegawai.BadRequest())
-	}
-
-	newPegawai := entity.Pegawai{Nama: tmpPegawai.Nama, HP: tmpPegawai.HP, Password: tmpPegawai.Password}
-	res, err := pc.Repo.Insert(newPegawai)
-
-	if err != nil {
-		log.Warn("masalah pada server")
-		return c.JSON(http.StatusInternalServerError, view.InternalServerError())
-	}
-	log.Info("berhasil insert")
-	return c.JSON(http.StatusCreated, pegawai.SuccessInsert(res))
 }
 
 func (pc *PegawaiController) GetAllPegawai() echo.HandlerFunc {
@@ -73,35 +75,37 @@ func (pc *PegawaiController) GetAllPegawai() echo.HandlerFunc {
 	}
 }
 
-func (pc *PegawaiController) Login(c echo.Context) error {
-	param := pegawai.LoginRequest{}
+func (pc *PegawaiController) Login() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		param := pegawai.LoginRequest{}
 
-	if err := c.Bind(&param); err != nil {
-		log.Warn("salah input")
-		return c.JSON(http.StatusBadRequest, pegawai.BadRequest())
-	}
+		if err := c.Bind(&param); err != nil {
+			log.Warn("salah input")
+			return c.JSON(http.StatusBadRequest, pegawai.BadRequest())
+		}
 
-	if err := pc.Valid.Struct(param); err != nil {
-		log.Warn(err.Error())
-		return c.JSON(http.StatusBadRequest, pegawai.BadRequest())
-	}
+		if err := pc.Valid.Struct(param); err != nil {
+			log.Warn(err.Error())
+			return c.JSON(http.StatusBadRequest, pegawai.BadRequest())
+		}
 
-	data, err := pc.Repo.Login(param.HP, param.Password)
+		data, err := pc.Repo.Login(param.HP, param.Password)
 
-	if err != nil {
-		log.Warn(err.Error())
-		return c.JSON(http.StatusNotFound, "HP atau Password tidak ditemukan")
-	}
+		if err != nil {
+			log.Warn(err.Error())
+			return c.JSON(http.StatusNotFound, "HP atau Password tidak ditemukan")
+		}
 
-	res := pegawai.LoginResponse{Data: data}
+		res := pegawai.LoginResponse{Data: data}
 
-	if res.Token == "" {
-		token, _ := CreateToken(int(data.ID))
-		res.Token = token
+		if res.Token == "" {
+			token, _ := CreateToken(int(data.ID))
+			res.Token = token
+			return c.JSON(http.StatusOK, view.OK(res, "Berhasil login"))
+		}
+
 		return c.JSON(http.StatusOK, view.OK(res, "Berhasil login"))
 	}
-
-	return c.JSON(http.StatusOK, view.OK(res, "Berhasil login"))
 }
 
 func CreateToken(userId int) (string, error) {

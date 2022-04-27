@@ -15,8 +15,8 @@ func RegisterPath(e *echo.Echo, pc pegawai.ControllerPegawai, bc book.Controller
 		Format: "time:${time_rfc3339}, method=${method}, uri=${uri}, status=${status}\n",
 	}))
 	// e.GET("/pegawai", pc.GetAllPegawai)
-	e.POST("/pegawai", pc.Insert) // Register
-	e.POST("/login", pc.Login)    // Login
+	e.POST("/pegawai", pc.Insert()) // Register
+	e.POST("/login", pc.Login())    // Login
 	e.GET("/coba", pc.GetAllPegawai(), middleware.JWTWithConfig(middleware.JWTConfig{SigningKey: []byte("RH$SI4")}))
 	e.POST("/book", bc.Insert, middleware.JWTWithConfig(middleware.JWTConfig{SigningKey: []byte("RH$SI4")}))
 	// kelompokGET := e.Group("/pegawai")
